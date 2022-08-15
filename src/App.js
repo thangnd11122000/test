@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Col, Row } from "antd";
+import axios from "axios";
+import { useState } from "react";
+import { Button, Input } from "react-chat-elements";
+import "react-chat-elements/dist/main.css";
 function App() {
+  const [message, setMessage] = useState("");
+  console.log(message);
+
+  const sendMessage = () => {
+    axios("https://demonodeappchatbot.herokuapp.com/webhook", {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+
+      data: { response: message },
+    })
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Row style={{ display: "flex" }}>
+        <Col span={12}>
+          <Input
+            placeholder="Type here..."
+            multiline={true}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+        </Col>
+        <Col span={12}>
+          <Button text={"Send"} onClick={() => sendMessage()} title="Send" />
+        </Col>
+      </Row>
+    </>
   );
 }
 
