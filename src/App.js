@@ -8,7 +8,7 @@ function App() {
   console.log(message);
 
   const sendMessage = () => {
-    axios("https://demonodeappchatbot.herokuapp.com/webhook1", {
+    axios("https://the20-manage-page.herokuapp.com/webhook1", {
       method: "POST",
       headers: {
         "Access-Control-Allow-Origin": "*",
